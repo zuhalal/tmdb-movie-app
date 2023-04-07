@@ -38,13 +38,7 @@ const DetailScreen = ({ route }) => {
   }, []);
 
   const genre = data?.genres.map((genre, index) =>
-    index == data?.genres.length - 1 ? (
-      <Text key={index} style={styles.subtitle}>
-        {genre.name}
-      </Text>
-    ) : (
-      <Text key={index} style={styles.subtitle}>{`${genre.name}, `}</Text>
-    )
+    index == data?.genres.length - 1 ? genre.name : `${genre.name}, `
   );
 
   return (
@@ -69,7 +63,7 @@ const DetailScreen = ({ route }) => {
                 horizontal={true}
                 style={{ display: "flex", gap: 4, flexDirection: "row" }}
               >
-                {genre}
+                <Text style={styles.subtitle}>{genre}</Text>
                 <Text>.</Text>
               </ScrollView>
               <Text style={styles.subtitle}>{data?.runtime} min</Text>

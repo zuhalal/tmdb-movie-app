@@ -11,7 +11,7 @@ export const HorizontalMovieList = ({ data, title }) => {
           horizontal={true}
           data={data}
           renderItem={({ item }) => <MovieItem item={item} />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => `${item.id}-${title}`}
         />
       </SafeAreaView>
     </View>
