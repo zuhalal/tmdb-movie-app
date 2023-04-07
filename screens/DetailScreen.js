@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import { HorizontalCastList } from "../components/containers";
+import { API_KEY, API_URL } from "../constants";
 
 const DetailScreen = ({ route }) => {
   const [data, setData] = useState(null);
@@ -20,12 +21,10 @@ const DetailScreen = ({ route }) => {
   const { id } = route.params;
 
   const fetchDetail = async () => {
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=7665d2ad6a113c3e42ef18a661d1e4b4`
-    );
+    const res = await axios.get(`${API_URL}/3/movie/${id}?api_key=${API_KEY}`);
 
     const cast = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=7665d2ad6a113c3e42ef18a661d1e4b4`
+      `${API_URL}/3/movie/${id}/credits?api_key=${API_KEY}`
     );
 
     setData(res.data);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import axios from "axios";
 import { HorizontalMovieList } from "../components/containers";
+import { API_KEY, API_URL } from "../constants";
 
 const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -12,24 +13,18 @@ const HomeScreen = () => {
   const fetchData = async () => {
     await Promise.all([
       axios
-        .get(
-          `https://api.themoviedb.org/3/movie/top_rated?api_key=7665d2ad6a113c3e42ef18a661d1e4b4`
-        )
+        .get(`${API_URL}/3/movie/top_rated?api_key=${API_KEY}`)
         .then((response) => {
           setTopRatedData(response.data?.results);
         }),
       axios
-        .get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=7665d2ad6a113c3e42ef18a661d1e4b4`
-        )
+        .get(`${API_URL}/3/movie/now_playing?api_key=${API_KEY}`)
         .then((response) => {
           setNowPlayingData(response.data?.results);
         }),
 
       axios
-        .get(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=7665d2ad6a113c3e42ef18a661d1e4b4`
-        )
+        .get(`${API_URL}/3/movie/upcoming?api_key=${API_KEY}`)
         .then((response) => {
           setUpcomingData(response.data?.results);
         }),
