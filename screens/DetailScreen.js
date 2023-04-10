@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from "react-native";
 import axios from "axios";
@@ -19,6 +20,7 @@ const DetailScreen = ({ route }) => {
 
   const [castData, setCastData] = useState([]);
   const { id } = route.params;
+  const { height, width } = useWindowDimensions();
 
   const fetchDetail = async () => {
     const res = await axios.get(`${API_URL}/3/movie/${id}?api_key=${API_KEY}`);
@@ -48,28 +50,67 @@ const DetailScreen = ({ route }) => {
             source={{
               uri: `https://image.tmdb.org/t/p/w500/${data?.poster_path}`,
             }}
-            resizeMode="cover"
+            resizeMode={height < 400 ? "contain" : "cover"}
           >
             <LinearGradient
               colors={["transparent", "#000000"]}
-              style={{ minHeight: 480, position: "relative" }}
+              style={{
+                minHeight: height < 400 ? 320 : 480,
+                position: "relative",
+              }}
             ></LinearGradient>
           </ImageBackground>
           <View style={styles.contentContainer}>
-            <Text style={styles.title}>{data?.title}</Text>
+            <Text
+              style={
+                height < 400 ? [styles.title, { fontSize: 28 }] : styles.title
+              }
+            >
+              {data?.title}
+            </Text>
             <View style={styles.containerInfo}>
               <ScrollView
                 horizontal={true}
                 style={{ display: "flex", gap: 4, flexDirection: "row" }}
               >
-                <Text style={styles.subtitle}>{genre}</Text>
+                <Text
+                  style={
+                    height < 400
+                      ? [styles.subtitle, { fontSize: 20 }]
+                      : styles.subtitle
+                  }
+                >
+                  {genre}
+                </Text>
                 <Text>.</Text>
               </ScrollView>
-              <Text style={styles.subtitle}>{data?.runtime} min</Text>
+              <Text
+                style={
+                  height < 400
+                    ? [styles.subtitle, { fontSize: 20 }]
+                    : styles.subtitle
+                }
+              >
+                {data?.runtime} min
+              </Text>
             </View>
-            <Text style={styles.paragraph}>{data?.overview}</Text>
+            <Text
+              style={
+                height < 400
+                  ? [styles.paragraph, { fontSize: 18 }]
+                  : styles.paragraph
+              }
+            >
+              {data?.overview}
+            </Text>
             <View style={styles.containerCast}>
-              <Text style={styles.title}>Casts</Text>
+              <Text
+                style={
+                  height < 400 ? [styles.title, { fontSize: 28 }] : styles.title
+                }
+              >
+                Casts
+              </Text>
               {loadingCast ? (
                 <ActivityIndicator animating={loadingCast} />
               ) : (
